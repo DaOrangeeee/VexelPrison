@@ -3,7 +3,6 @@ package com.vexelcore.prison.commands;
 import com.vexelcore.prison.core.VexelPrisonPlugin;
 import com.vexelcore.prison.data.PlayerData;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,39 +39,22 @@ public class CommandRegistry implements CommandExecutor, TabCompleter, Listener 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (label.equalsIgnoreCase("help") || label.equals("?")) {
-            if (sender instanceof Player player) plugin.getGuiService().openHelp(player);
-            return true;
-        }
         if (!(sender instanceof Player player) && !label.equalsIgnoreCase("vexelcore")) return true;
         switch (label.toLowerCase()) {
             case "pickaxe" -> plugin.getGuiService().openUpgrades(player);
-            case "prestige" -> openPrestige(player);
-            case "rebirth" -> openRebirth(player);
-            case "crates" -> player.sendMessage(ChatColor.GREEN + "Use crate GUI at spawn or /vexelcore givekey");
-            case "boosters" -> player.sendMessage(ChatColor.YELLOW + "Booster GUI coming from /pickaxe menu integration.");
-            case "vexelcore" -> return admin(sender, args);
-            default -> { return false; }
+            case "prestige" -> plugin.getGuiService().openPrestige(player, 1);
+            case "rebirth" -> plugin.getGuiService().openRebirth(player);
+            case "crates" -> plugin.getGuiService().openCrates(player);
+            case "boosters" -> player.sendMessage("§eBooster manager is integrated through rewards and status indicator.");
+            case "help", "?" -> plugin.getGuiService().openHelp(player, "core");
+            case "vexelcore" -> {
+                return admin(sender, args);
+            }
+            default -> {
+                return false;
+            }
         }
         return true;
-    }
-
-    public void openPrestige(Player player) {
-        PlayerData data = plugin.getPlayerDataService().get(player);
-        if (plugin.getPrestigeService().prestige(data, 1)) {
-            player.sendMessage(ChatColor.LIGHT_PURPLE + "Prestiged to " + data.getPrestige());
-        } else {
-            player.sendMessage(ChatColor.RED + "You do not meet prestige requirements.");
-        }
-    }
-
-    public void openRebirth(Player player) {
-        PlayerData data = plugin.getPlayerDataService().get(player);
-        if (plugin.getRebirthService().rebirth(data)) {
-            player.sendMessage(ChatColor.AQUA + "Rebirth successful. Permanent bonuses increased.");
-        } else {
-            player.sendMessage(ChatColor.RED + "You do not meet rebirth requirements.");
-        }
     }
 
     private boolean admin(CommandSender sender, String[] args) {
@@ -130,7 +112,7 @@ public class CommandRegistry implements CommandExecutor, TabCompleter, Listener 
         String cmd = event.getMessage().toLowerCase();
         if (cmd.equals("/help") || cmd.equals("/?")) {
             event.setCancelled(true);
-            plugin.getGuiService().openHelp(event.getPlayer());
+            plugin.getGuiService().openHelp(event.getPlayer(), "core");
         }
     }
 }

@@ -25,6 +25,8 @@ prestige:
   max: 1000
   required-rebirth: 0
 
+upgrades-require-pickaxe-level: true
+
 upgrades:
   EFFICIENCY: { cost-multiplier: 150 }
   FORTUNE: { cost-multiplier: 150 }
@@ -97,3 +99,16 @@ prestige-rewards:
     '500': ['money:500000', 'tokens:25000', 'command:lp user %player% parent add elite']
     '750': ['money:750000', 'tokens:40000']
     '1000': ['money:1000000', 'tokens:100000', 'command:lp user %player% parent add legend']
+
+
+help-gui:
+  core:
+    entries:
+      - '/pickaxe|Open the pickaxe upgrades menu'
+      - '/prestige|Open prestige progression and claim rewards'
+      - '/rebirth|Open rebirth confirmation and bonuses'
+      - '/crates|Open virtual crate menu'
+  economy:
+    entries:
+      - '/vexelcore status|Check module and dependency health'
+      - '/vexelcore givekey <player> <crate> <amount>|Grant virtual keys'

@@ -54,6 +54,14 @@ Detailed guide: `SETUP_FOR_SERVER_OWNERS.md`
 - `/vexelcore reload`
 - `/vexelcore status`
 
+
+## Gameplay status (implemented)
+- Upgrade purchases now consume Pickaxe XP wallet and enforce affordability checks.
+- Prestige uses a paginated GUI with +1 / +/-page / +/-10 controls and reward claiming per level.
+- Rebirth uses a confirmation GUI with reset preview and bonus preview.
+- Crates use weighted config rewards with delayed opening (spin timing) and virtual key consumption.
+- Help GUI is category-based and config-driven from `help-gui` config section.
+
 ## Notes
 - Plugin runs with zero soft-dependencies installed.
 - Modules are dependency aware and can degrade gracefully.

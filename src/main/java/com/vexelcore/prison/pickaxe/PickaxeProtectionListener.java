@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 
@@ -32,9 +31,15 @@ public class PickaxeProtectionListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
         if (event.getCurrentItem() != null && pickaxeManager.isPrisonPickaxe(event.getCurrentItem())) event.setCancelled(true);
-        if (event.getHotbarButton() == 0) event.setCancelled(true);
         if (event.getSlot() == 0 && event.getClickedInventory() == player.getInventory()) event.setCancelled(true);
-        if (event.getAction() == InventoryAction.HOTBAR_SWAP || event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD) event.setCancelled(true);
+        if (event.getAction() == InventoryAction.HOTBAR_SWAP || event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD) {
+            if (event.getCurrentItem() != null && pickaxeManager.isPrisonPickaxe(event.getCurrentItem())) event.setCancelled(true);
+            if (event.getHotbarButton() == 0) event.setCancelled(true);
+            if (event.getWhoClicked() instanceof Player p) {
+                var hotbar = p.getInventory().getItem(event.getHotbarButton());
+                if (pickaxeManager.isPrisonPickaxe(hotbar)) event.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
