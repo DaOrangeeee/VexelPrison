@@ -25,7 +25,6 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly("net.luckperms:api:5.4")
     compileOnly("me.clip:placeholderapi:2.11.6")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9")
 
     implementation("org.xerial:sqlite-jdbc:3.46.0.0")
     implementation("com.zaxxer:HikariCP:5.1.0")
