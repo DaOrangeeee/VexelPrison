@@ -39,17 +39,23 @@ public class CommandRegistry implements CommandExecutor, TabCompleter, Listener 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player player) && !label.equalsIgnoreCase("vexelcore")) return true;
-        switch (label.toLowerCase()) {
+        String lower = label.toLowerCase();
+        if (lower.equals("vexelcore")) {
+            return admin(sender, args);
+        }
+
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage("This command can only be used by players.");
+            return true;
+        }
+
+        switch (lower) {
             case "pickaxe" -> plugin.getGuiService().openUpgrades(player);
             case "prestige" -> plugin.getGuiService().openPrestige(player, 1);
             case "rebirth" -> plugin.getGuiService().openRebirth(player);
             case "crates" -> plugin.getGuiService().openCrates(player);
             case "boosters" -> player.sendMessage("§eBooster manager is integrated through rewards and status indicator.");
             case "help", "?" -> plugin.getGuiService().openHelp(player, "core");
-            case "vexelcore" -> {
-                return admin(sender, args);
-            }
             default -> {
                 return false;
             }
@@ -83,6 +89,7 @@ public class CommandRegistry implements CommandExecutor, TabCompleter, Listener 
             case "setprestige" -> setInt(sender, args, "prestige");
             case "setrebirth" -> setInt(sender, args, "rebirth");
             case "setpxlvl" -> setInt(sender, args, "pxlvl");
+            default -> sender.sendMessage("Unknown subcommand.");
         }
         return true;
     }
