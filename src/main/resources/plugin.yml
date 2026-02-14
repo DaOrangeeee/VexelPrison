@@ -1,0 +1,36 @@
+name: VexelPrisonCore
+main: com.vexelcore.prison.core.VexelPrisonPlugin
+version: 1.0.0
+api-version: '1.21'
+author: VexelCore
+softdepend:
+  - Vault
+  - LuckPerms
+  - PlaceholderAPI
+  - DecentHolograms
+  - HolographicDisplays
+  - WorldGuard
+  - ItemsAdder
+commands:
+  pickaxe:
+    description: Open pickaxe upgrades menu
+  prestige:
+    description: Open prestige menu
+  rebirth:
+    description: Open rebirth menu
+  crates:
+    description: Open crates menu
+  boosters:
+    description: Open boosters menu
+  help:
+    description: Open custom help GUI
+  '?':
+    description: Open custom help GUI
+  vexelcore:
+    description: VexelCore admin commands
+    permission: vexelcore.admin
+permissions:
+  vexelcore.admin:
+    default: op
+  vexelcore.crates.skipanimation:
+    default: op
