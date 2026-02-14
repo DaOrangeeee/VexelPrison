@@ -1,0 +1,10 @@
+prefix: '&6&lVexel &8» '
+pickaxe:
+  lore:
+    - '&7A permanent mining companion.'
+    - '&7Unbreakable and bound to your soul.'
+status:
+  enabled: '&a✔'
+  disabled: '&c✖'
+help:
+  title: '&8&lServer Help'

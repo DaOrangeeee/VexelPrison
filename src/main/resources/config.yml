@@ -1,0 +1,114 @@
+database:
+  type: SQLITE
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    database: vexelprison
+    user: root
+    password: change-me
+
+pickaxe:
+  base-xp: 5
+  level-formula-multiplier: 25.0
+  max-level: 500
+  display: ACTIONBAR
+
+rebirth:
+  max: 50
+  reset-upgrades: true
+  bonuses:
+    xp-per: 2
+    sell-per: 1
+    key-per: 1
+
+prestige:
+  max: 1000
+  required-rebirth: 0
+
+upgrades-require-pickaxe-level: true
+
+upgrades:
+  EFFICIENCY: { cost-multiplier: 150 }
+  FORTUNE: { cost-multiplier: 150 }
+  EXPLOSIVE: { cost-multiplier: 175 }
+  LASER: { cost-multiplier: 175 }
+  VEIN_MINER: { cost-multiplier: 160 }
+  TOKEN_FINDER: { cost-multiplier: 140 }
+  KEY_FINDER: { cost-multiplier: 200 }
+  AUTOSELL_BOOST: { cost-multiplier: 150 }
+  AUTOREPAIR: { cost-multiplier: 130 }
+  XP_MAGNET: { cost-multiplier: 120 }
+  LUCKY_CHARM: { cost-multiplier: 190 }
+  BLACKHOLE: { cost-multiplier: 165 }
+  GEM_FINDER: { cost-multiplier: 170 }
+  HASTE_SURGE: { cost-multiplier: 185 }
+  COMBO_STREAK: { cost-multiplier: 210 }
+
+mines:
+  starter:
+    world: world
+    x1: -50
+    y1: 40
+    z1: -50
+    x2: 50
+    y2: 120
+    z2: 50
+
+gui:
+  main-title: '&8&lVexel Prison'
+  upgrades-title: '&8&lPickaxe Upgrades'
+  help-title: '&8&lServer Help'
+
+crates:
+  basic:
+    spin-seconds: 4
+    rewards:
+      - 'money:1000:weight=55'
+      - 'tokens:100:weight=35'
+      - 'key:rare:1:weight=10'
+  rare:
+    spin-seconds: 5
+    rewards:
+      - 'money:5000:weight=50'
+      - 'tokens:500:weight=35'
+      - 'booster:xp:15:900:weight=15'
+  epic:
+    spin-seconds: 6
+    rewards:
+      - 'money:12000:weight=45'
+      - 'tokens:1000:weight=40'
+      - 'command:lp user %player% parent add vip:weight=15'
+  monthly:
+    spin-seconds: 6
+    rewards:
+      - 'money:50000:weight=50'
+      - 'tokens:5000:weight=40'
+      - 'command:lp user %player% parent add mvp:weight=10'
+
+prestige-rewards:
+  default:
+    every:
+      - 'money:2500'
+      - 'tokens:100'
+  milestones:
+    '50': ['money:50000', 'tokens:2500']
+    '100': ['money:100000', 'tokens:5000']
+    '150': ['money:150000', 'tokens:7500']
+    '200': ['money:200000', 'tokens:10000']
+    '250': ['money:250000', 'tokens:12500']
+    '500': ['money:500000', 'tokens:25000', 'command:lp user %player% parent add elite']
+    '750': ['money:750000', 'tokens:40000']
+    '1000': ['money:1000000', 'tokens:100000', 'command:lp user %player% parent add legend']
+
+
+help-gui:
+  core:
+    entries:
+      - '/pickaxe|Open the pickaxe upgrades menu'
+      - '/prestige|Open prestige progression and claim rewards'
+      - '/rebirth|Open rebirth confirmation and bonuses'
+      - '/crates|Open virtual crate menu'
+  economy:
+    entries:
+      - '/vexelcore status|Check module and dependency health'
+      - '/vexelcore givekey <player> <crate> <amount>|Grant virtual keys'
