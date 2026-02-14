@@ -98,9 +98,10 @@ public class VexelPrisonPlugin extends JavaPlugin implements Listener {
     }
 
     private void loadAndBootstrap(Player player) {
-        playerDataService.loadPlayer(player);
-        crateService.grantMonthly(playerDataService.get(player));
-        pickaxeManager.ensureBound(player);
+        playerDataService.loadPlayer(player).thenAccept(data -> Bukkit.getScheduler().runTask(this, () -> {
+            crateService.grantMonthly(data);
+            pickaxeManager.ensureBound(player);
+        }));
     }
 
     public void reloadMessages() {

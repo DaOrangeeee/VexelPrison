@@ -23,6 +23,7 @@ public class DatabaseManager {
     private final VexelPrisonPlugin plugin;
     private final Gson gson = new Gson();
     private HikariDataSource source;
+    private DatabaseType databaseType = DatabaseType.SQLITE;
 
     public DatabaseManager(VexelPrisonPlugin plugin) {
         this.plugin = plugin;
@@ -30,6 +31,7 @@ public class DatabaseManager {
 
     public void connect() {
         DatabaseType type = DatabaseType.valueOf(plugin.getConfig().getString("database.type", "SQLITE").toUpperCase());
+        this.databaseType = type;
         HikariConfig cfg = new HikariConfig();
         if (type == DatabaseType.SQLITE) {
             File dbFile = new File(plugin.getDataFolder(), "data.db");
@@ -103,8 +105,11 @@ public class DatabaseManager {
 
     public CompletableFuture<Void> save(PlayerData data) {
         return CompletableFuture.runAsync(() -> {
-            String sql = "INSERT INTO prison_players (uuid,pickaxe_xp,pickaxe_level,rebirth,prestige,playtime,upgrades,keys_json,boosters_json,blocks_json,claims_json) VALUES (?,?,?,?,?,?,?,?,?,?,?) " +
-                    "ON CONFLICT(uuid) DO UPDATE SET pickaxe_xp=excluded.pickaxe_xp,pickaxe_level=excluded.pickaxe_level,rebirth=excluded.rebirth,prestige=excluded.prestige,playtime=excluded.playtime,upgrades=excluded.upgrades,keys_json=excluded.keys_json,boosters_json=excluded.boosters_json,blocks_json=excluded.blocks_json,claims_json=excluded.claims_json";
+            String sql = databaseType == DatabaseType.MYSQL
+                    ? "INSERT INTO prison_players (uuid,pickaxe_xp,pickaxe_level,rebirth,prestige,playtime,upgrades,keys_json,boosters_json,blocks_json,claims_json) VALUES (?,?,?,?,?,?,?,?,?,?,?) " +
+                      "ON DUPLICATE KEY UPDATE pickaxe_xp=VALUES(pickaxe_xp),pickaxe_level=VALUES(pickaxe_level),rebirth=VALUES(rebirth),prestige=VALUES(prestige),playtime=VALUES(playtime),upgrades=VALUES(upgrades),keys_json=VALUES(keys_json),boosters_json=VALUES(boosters_json),blocks_json=VALUES(blocks_json),claims_json=VALUES(claims_json)"
+                    : "INSERT INTO prison_players (uuid,pickaxe_xp,pickaxe_level,rebirth,prestige,playtime,upgrades,keys_json,boosters_json,blocks_json,claims_json) VALUES (?,?,?,?,?,?,?,?,?,?,?) " +
+                      "ON CONFLICT(uuid) DO UPDATE SET pickaxe_xp=excluded.pickaxe_xp,pickaxe_level=excluded.pickaxe_level,rebirth=excluded.rebirth,prestige=excluded.prestige,playtime=excluded.playtime,upgrades=excluded.upgrades,keys_json=excluded.keys_json,boosters_json=excluded.boosters_json,blocks_json=excluded.blocks_json,claims_json=excluded.claims_json";
             try (Connection c = source.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
                 ps.setString(1, data.getUuid().toString());
                 ps.setInt(2, data.getPickaxeXp());

@@ -21,6 +21,15 @@ Production-ready modular OP Prison core plugin for Purpur/Paper 1.21.11.
 
 Output jar: `build/libs/VexelPrisonCore-1.0.0.jar`
 
+## No-code install (recommended)
+If you do not code, use GitHub Actions artifacts:
+1. Open **Actions** in this repo.
+2. Open the latest successful **Build VexelPrisonCore** run.
+3. Download **VexelPrisonCore-jar** artifact.
+4. Upload the jar to your server `plugins/` folder and restart.
+
+Detailed guide: `SETUP_FOR_SERVER_OWNERS.md`
+
 ## Setup
 1. Place jar in `/plugins`.
 2. Start server once to generate configs.

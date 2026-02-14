@@ -18,8 +18,11 @@ public class PlayerDataService {
         this.databaseManager = databaseManager;
     }
 
-    public void loadPlayer(Player player) {
-        databaseManager.load(player.getUniqueId()).thenAccept(data -> cache.put(player.getUniqueId(), data));
+    public java.util.concurrent.CompletableFuture<PlayerData> loadPlayer(Player player) {
+        return databaseManager.load(player.getUniqueId()).thenApply(data -> {
+            cache.put(player.getUniqueId(), data);
+            return data;
+        });
     }
 
     public PlayerData get(Player player) {
